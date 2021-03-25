@@ -20,14 +20,14 @@ public class ProductResource {
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable("id") Long id) {
         System.out.println(id);
-        Product p = new Product(1L, "Mouse", "Mouse Gamer", 75f);
+        Product p = new Product(1L, "Mouse", "Mouse Gamer", 85f);
         return p;
     }
 
     @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
         System.out.println(id);
-        return "Excluir produtooooos";
+        return "Excluir produto";
     }
 
 }
