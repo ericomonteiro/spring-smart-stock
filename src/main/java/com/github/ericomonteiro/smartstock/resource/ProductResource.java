@@ -20,7 +20,7 @@ public class ProductResource {
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable("id") Long id) {
         System.out.println(id);
-        Product p = new Product(1L, "Mouse", "Mouse Gamer", 85f);
+        Product p = new Product(1L, "Mouse", "Mouse Gamer", 90f);
         return p;
     }
 
