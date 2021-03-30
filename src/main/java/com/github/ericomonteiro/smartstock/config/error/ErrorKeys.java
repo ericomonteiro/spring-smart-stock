@@ -3,6 +3,7 @@ package com.github.ericomonteiro.smartstock.config.error;
 public class ErrorKeys {
 
     public static class General {
+        public static final String NOT_FOUND = "general-404";
         public static final String INTERNAL_SERVER_ERROR = "general-500";
     }
 

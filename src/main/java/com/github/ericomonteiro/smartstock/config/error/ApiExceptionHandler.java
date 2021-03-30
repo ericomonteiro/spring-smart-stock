@@ -1,6 +1,7 @@
 package com.github.ericomonteiro.smartstock.config.error;
 
 
+import com.github.ericomonteiro.smartstock.config.error.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import java.util.Locale;
 import java.util.stream.Stream;
 
 import static com.github.ericomonteiro.smartstock.config.error.ErrorKeys.General.INTERNAL_SERVER_ERROR;
+import static com.github.ericomonteiro.smartstock.config.error.ErrorKeys.General.NOT_FOUND;
 import static java.util.stream.Collectors.toList;
 
 @RestControllerAdvice
@@ -43,10 +45,23 @@ public class ApiExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(ResourceNotFoundException exception
+            , Locale locale) {
+
+        LOG.error("handleNotFoundException", exception);
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        Object[] errorArgs = {exception.getEntity(), exception.getKey()};
+        ApiError apiError = toApiError(NOT_FOUND, locale, errorArgs);
+        ErrorResponse errorResponse = ErrorResponse.of(status, apiError);
+        return ResponseEntity.status(status).body(errorResponse);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleUnexpectedError(Exception exception
             , Locale locale) {
-        LOG.error(exception.getMessage());
+        LOG.error("handleUnexpectedError", exception);
 
         ApiError apiError = toApiError(INTERNAL_SERVER_ERROR, locale);
 
@@ -54,11 +69,15 @@ public class ApiExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    private ApiError toApiError(String code, Locale locale) {
+        return toApiError(code, locale, (Object) null);
+    }
 
-    private ErrorResponse.ApiError toApiError(String code, Locale locale) {
+
+    private ErrorResponse.ApiError toApiError(String code, Locale locale, Object... args) {
         String message;
         try {
-            message = apiErrorMessageSource.getMessage(code, null, locale);
+            message = apiErrorMessageSource.getMessage(code, args, locale);
         } catch (NoSuchMessageException e) {
             LOG.error("Could not find any message for {} code under {} locale", code, locale);
             message = NO_MESSAGE_AVAILABLE;

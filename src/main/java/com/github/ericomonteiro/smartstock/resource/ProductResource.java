@@ -1,5 +1,6 @@
 package com.github.ericomonteiro.smartstock.resource;
 
+import com.github.ericomonteiro.smartstock.config.error.exceptions.ResourceNotFoundException;
 import com.github.ericomonteiro.smartstock.model.mapper.ProductMapper;
 import lombok.AllArgsConstructor;
 import com.github.ericomonteiro.smartstock.model.Product;
@@ -32,7 +33,7 @@ public class ProductResource {
 
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable("id") Long id) {
-        return productRepository.findById(id).get();
+        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("product", id.toString()));
     }
 
     @PostMapping
