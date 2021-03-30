@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  postgres-compose:
+  postgres-docker:
     image: postgres
     environment:
       POSTGRES_USER: "postgres"
@@ -9,3 +9,9 @@ services:
       POSTGRES_DB: smart-stock
     ports:
       - "5432:5432"
+
+  adminer-docker:
+    image: adminer
+    restart: always
+    ports:
+      - "8081:8080"
