@@ -1,10 +1,13 @@
 package com.github.ericomonteiro.smartstock.resource;
 
+import com.github.ericomonteiro.smartstock.model.mapper.ProductMapper;
 import lombok.AllArgsConstructor;
 import com.github.ericomonteiro.smartstock.model.Product;
 import com.github.ericomonteiro.smartstock.model.dto.product.ProductCreateDto;
 import com.github.ericomonteiro.smartstock.model.dto.product.ProductDto;
 import com.github.ericomonteiro.smartstock.repository.ProductRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,9 +36,12 @@ public class ProductResource {
     }
 
     @PostMapping
-    public ProductDto createProduct(@Valid @RequestBody ProductCreateDto productCreate) {
-        System.out.println(productCreate);
-        return new ProductDto();
+    public ResponseEntity<ProductDto> createProduct(@Valid @RequestBody ProductCreateDto productCreate) {
+        Product product = ProductMapper.of(productCreate);
+        product = productRepository.save(product);
+
+        ProductDto response = ProductMapper.toProductDto(product);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

@@ -12,10 +12,13 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import com.github.ericomonteiro.smartstock.config.error.ErrorResponse.ApiError;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
+
+import static com.github.ericomonteiro.smartstock.config.error.ErrorKeys.General.INTERNAL_SERVER_ERROR;
 import static java.util.stream.Collectors.toList;
 
 @RestControllerAdvice
@@ -39,6 +42,18 @@ public class ApiExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.BAD_REQUEST, apiErrors);
         return ResponseEntity.badRequest().body(errorResponse);
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleUnexpectedError(Exception exception
+            , Locale locale) {
+        LOG.error(exception.getMessage());
+
+        ApiError apiError = toApiError(INTERNAL_SERVER_ERROR, locale);
+
+        ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR, apiError);
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
 
     private ErrorResponse.ApiError toApiError(String code, Locale locale) {
         String message;
