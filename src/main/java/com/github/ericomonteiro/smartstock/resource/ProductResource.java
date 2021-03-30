@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/product")
 @AllArgsConstructor
 public class ProductResource {
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     @GetMapping
     public List<Product> getAllProducts() {
