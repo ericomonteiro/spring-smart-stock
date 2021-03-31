@@ -3,15 +3,34 @@ version: '3'
 services:
   postgres-docker:
     image: postgres
+    volumes:
+      - ./compose-util/docker-postgresql-multiple-databases:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: smart-stock
     ports:
-      - "5432:5432"
+      - 5432:5432
 
   adminer-docker:
     image: adminer
     restart: always
     ports:
-      - "8081:8080"
+      - 9000:8080
+
+  keycloak-docker:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres-docker
+      DB_DATABASE: keycloak
+      DB_USER: postgres
+      DB_SCHEMA: public
+      DB_PASSWORD: postgres
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: 123456
+      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+      #JDBC_PARAMS: "ssl=true"
+    ports:
+      - 9001:8080
+    depends_on:
+      - postgres-docker
