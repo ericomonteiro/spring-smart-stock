@@ -18,7 +18,9 @@ services:
       - 9000:8080
 
   keycloak-docker:
-    image: quay.io/keycloak/keycloak:latest
+    image: jboss/keycloak
+    volumes:
+      - ./compose-util/keycloack-realm/smart-stock.json:/tmp/smart-stock.json
     environment:
       DB_VENDOR: POSTGRES
       DB_ADDR: postgres-docker
@@ -28,8 +30,7 @@ services:
       DB_PASSWORD: postgres
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: 123456
-      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
-      #JDBC_PARAMS: "ssl=true"
+      KEYCLOAK_IMPORT: /tmp/smart-stock.json
     ports:
       - 9001:8080
     depends_on:
