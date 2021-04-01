@@ -17,6 +17,12 @@ public class UserResource {
         return ResponseEntity.ok("Hello Anonymous");
     }
 
+    @RolesAllowed("guest")
+    @GetMapping(value = "/all-user")
+    public ResponseEntity<String> getAllUser() {
+        return ResponseEntity.ok("Hello All User");
+    }
+
     @RolesAllowed("user")
     @GetMapping(value = "/user")
     public ResponseEntity<String> getUser() {
@@ -27,11 +33,5 @@ public class UserResource {
     @GetMapping(value = "/admin")
     public ResponseEntity<String> getAdmin() {
         return ResponseEntity.ok("Hello Admin");
-    }
-
-    @RolesAllowed("guest")
-    @GetMapping(value = "/all-user")
-    public ResponseEntity<String> getAllUser() {
-        return ResponseEntity.ok("Hello All User");
     }
 }

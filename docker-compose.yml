@@ -16,6 +16,8 @@ services:
     restart: always
     ports:
       - 9000:8080
+    depends_on:
+      - postgres-docker
 
   keycloak-docker:
     image: jboss/keycloak
@@ -30,7 +32,7 @@ services:
       DB_PASSWORD: postgres
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: 123456
-      KEYCLOAK_IMPORT: /tmp/smart-stock.json
+      KEYCLOAK_IMPORT: "/tmp/smart-stock.json -Dkeycloak.profile.feature.upload_scripts=enabled"
     ports:
       - 9001:8080
     depends_on:
