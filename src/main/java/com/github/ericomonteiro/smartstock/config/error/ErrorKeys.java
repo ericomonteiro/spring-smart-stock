@@ -13,6 +13,7 @@ public class ErrorKeys {
         public static final String DETAIL_NOT_BLANK = "product-2";
         public static final String PRICE_MUST_GREATER_ZERO = "product-3";
         public static final String PRICE_NOT_NULL = "product-4";
+        public static final String ALREADY_PRODUCT_WITH_THIS_NAME = "product-5";
     }
 
 }

@@ -1,6 +1,7 @@
 package com.github.ericomonteiro.smartstock.config.error;
 
 
+import com.github.ericomonteiro.smartstock.config.error.exceptions.BusinessException;
 import com.github.ericomonteiro.smartstock.config.error.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -44,25 +45,34 @@ public class ApiExceptionHandler {
                 .collect(toList());
 
         ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.BAD_REQUEST, apiErrors);
+        LOG.warn("handleNotValidException", errorResponse);
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFoundException(ResourceNotFoundException exception, Locale locale) {
-
-        LOG.error("handleNotFoundException", exception);
         HttpStatus status = HttpStatus.NOT_FOUND;
 
         Object[] errorArgs = {exception.getEntity(), exception.getKey()};
         ApiError apiError = toApiError(NOT_FOUND, locale, errorArgs);
         ErrorResponse errorResponse = ErrorResponse.of(status, apiError);
+        LOG.warn("handleNotFoundException: " + errorResponse);
+        return ResponseEntity.status(status).body(errorResponse);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException exception, Locale locale) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+
+        ApiError apiError = toApiError(exception.getErrorCode(), locale);
+        ErrorResponse errorResponse = ErrorResponse.of(status, apiError);
+        LOG.warn("handleBusinessException", errorResponse);
         return ResponseEntity.status(status).body(errorResponse);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException exception, Locale locale) {
         ApiError apiError = toApiError(ACCESS_DENIED, locale);
-
         ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED, apiError);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }

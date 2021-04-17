@@ -20,16 +20,16 @@ class ProductMapperSpec extends Specification {
         product.getPrice() == fromDto.getPrice()
     }
 
-    def "shall convert a Product to ProductDto"() {
-        when: "convert a Product to ProductDto"
-        def from = new Product(1L, "NAME", "DETAILS", 15.5)
-        def productDto = productMapper.toProductDto(from)
-
-        then: "expect a product model equals the dto"
-        productDto.getId() == from.getId()
-        productDto.getName() == from.getName()
-        productDto.getDetails() == from.getDetails()
-        productDto.getPrice() == from.getPrice()
-    }
+//    def "shall convert a Product to ProductDto"() {
+//        when: "convert a Product to ProductDto"
+//        def from = new Product(1L, "NAME", "DETAILS", 15.5)
+//        def productDto = productMapper.toProductDto(from)
+//
+//        then: "expect a product model equals the dto"
+//        productDto.getId() == from.getId()
+//        productDto.getName() == from.getName()
+//        productDto.getDetails() == from.getDetails()
+//        productDto.getPrice() == from.getPrice()
+//    }
 
 }
