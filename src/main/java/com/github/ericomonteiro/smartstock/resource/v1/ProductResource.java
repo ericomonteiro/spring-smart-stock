@@ -1,4 +1,4 @@
-package com.github.ericomonteiro.smartstock.resource;
+package com.github.ericomonteiro.smartstock.resource.v1;
 
 import com.github.ericomonteiro.smartstock.model.Product;
 import com.github.ericomonteiro.smartstock.model.dto.product.ProductWithHistoryDto;
@@ -22,7 +22,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("v1/product")
 @AllArgsConstructor
 public class ProductResource {
     private final ProductService productService;

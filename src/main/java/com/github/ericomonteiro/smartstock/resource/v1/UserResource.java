@@ -1,4 +1,4 @@
-package com.github.ericomonteiro.smartstock.resource;
+package com.github.ericomonteiro.smartstock.resource.v1;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.github.ericomonteiro.smartstock.resource;
+package com.github.ericomonteiro.smartstock.resource.v1;
 
 import com.github.ericomonteiro.smartstock.integration.viavep.ViaCepClient;
 import com.github.ericomonteiro.smartstock.integration.viavep.dto.ViaCepAddressDto;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/address")
+@RequestMapping("v1/address")
 @RequiredArgsConstructor
 public class AddressResource {
     private final ViaCepClient viaCepClient;
