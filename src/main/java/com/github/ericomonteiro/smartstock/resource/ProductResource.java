@@ -1,5 +1,9 @@
 package com.github.ericomonteiro.smartstock.resource;
 
+import com.github.ericomonteiro.smartstock.model.Product;
+import com.github.ericomonteiro.smartstock.model.dto.product.ProductWithHistoryDto;
+import com.github.ericomonteiro.smartstock.model.dto.stockhistory.StockHistoryDto;
+import com.github.ericomonteiro.smartstock.repository.ProductRepository;
 import com.github.ericomonteiro.smartstock.service.product.ProductService;
 import lombok.AllArgsConstructor;
 import com.github.ericomonteiro.smartstock.model.dto.product.ProductCreateDto;
@@ -22,6 +26,12 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductResource {
     private final ProductService productService;
+    private final ProductRepository productRepository;
+
+    @GetMapping("/model")
+    public List<Product> getFromModel() {
+        return productRepository.findAll();
+    }
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> getAllProducts() {
@@ -34,8 +44,13 @@ public class ProductResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Long id) {
+    public ResponseEntity<ProductWithHistoryDto> getProduct(@PathVariable("id") Long id) {
         return ResponseEntity.ok(productService.getProduct(id));
+    }
+
+    @GetMapping("/{id}/history")
+    public ResponseEntity<List<StockHistoryDto>> getProductStockHistory(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(productService.getProductStockHistory(id));
     }
 
     @PutMapping("/{id}")

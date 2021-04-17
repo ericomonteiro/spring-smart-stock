@@ -5,7 +5,10 @@ import com.github.ericomonteiro.smartstock.config.error.exceptions.ResourceNotFo
 import com.github.ericomonteiro.smartstock.model.Product;
 import com.github.ericomonteiro.smartstock.model.dto.product.ProductCreateDto;
 import com.github.ericomonteiro.smartstock.model.dto.product.ProductDto;
+import com.github.ericomonteiro.smartstock.model.dto.product.ProductWithHistoryDto;
+import com.github.ericomonteiro.smartstock.model.dto.stockhistory.StockHistoryDto;
 import com.github.ericomonteiro.smartstock.model.mapper.ProductMapper;
+import com.github.ericomonteiro.smartstock.model.mapper.StockHistoryMapper;
 import com.github.ericomonteiro.smartstock.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,8 +43,16 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductDto getProduct(Long id) {
-        return ProductMapper.toProductDto(getAndValidProduct(id));
+    public ProductWithHistoryDto getProduct(Long id) {
+        return ProductMapper.toProductWithHistoryDto(getAndValidProduct(id));
+    }
+
+    public List<StockHistoryDto> getProductStockHistory(Long id) {
+        return getAndValidProduct(id)
+                .getHistory()
+                .stream()
+                .map(StockHistoryMapper::toStockHistoryDto)
+                .collect(Collectors.toList());
     }
 
     public ProductDto updateProduct(Long id, ProductCreateDto productDto) {
