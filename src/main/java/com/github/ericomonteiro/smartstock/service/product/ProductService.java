@@ -79,7 +79,7 @@ public class ProductService {
         return productRepository.findByNameIgnoreCaseAndIdIsNot(name, id).isPresent();
     }
 
-    private Product getAndValidProduct(Long id) {
+    public Product getAndValidProduct(Long id) {
         return getAndValidProduct(productRepository.findById(id), id.toString());
     }
 

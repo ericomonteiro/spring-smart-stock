@@ -10,4 +10,5 @@ public class ProductDto {
     private String name;
     private String details;
     private Float price;
+    private Long stock;
 }

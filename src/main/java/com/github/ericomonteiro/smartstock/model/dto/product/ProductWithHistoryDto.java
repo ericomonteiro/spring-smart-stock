@@ -13,5 +13,6 @@ public class ProductWithHistoryDto {
     private String name;
     private String details;
     private Float price;
+    private Long stock;
     private List<StockHistoryDto> history;
 }

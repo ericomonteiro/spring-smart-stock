@@ -1,10 +1,12 @@
 package com.github.ericomonteiro.smartstock.model;
 
+import com.github.ericomonteiro.smartstock.model.enums.StockMovementType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,7 +40,11 @@ public class Product {
     @Column(nullable = false)
     private Long stock;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product"
+            , fetch = FetchType.LAZY
+            , cascade = CascadeType.ALL
+            , orphanRemoval = true
+    )
     private List<StockHistory> history;
 
     public Product(Long id, String name, String details, Float price) {
@@ -47,6 +53,28 @@ public class Product {
         this.details = details;
         this.price = price;
         this.stock = 0L;
+    }
+
+    public void registerEntry(Long quantity) {
+        StockHistory stockHistory = new StockHistory(
+                this,
+                StockMovementType.ENTRY,
+                quantity
+        );
+
+        this.stock += quantity;
+        this.history.add(stockHistory);
+    }
+
+    public void registerExit(Long quantity) {
+        StockHistory stockHistory = new StockHistory(
+                this,
+                StockMovementType.EXIT,
+                quantity
+        );
+
+        this.stock -= quantity;
+        this.history.add(stockHistory);
     }
 
 }

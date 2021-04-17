@@ -20,7 +20,7 @@ public class ProductMapper {
     }
 
     public static ProductDto toProductDto(Product p) {
-        return new ProductDto(p.getId(), p.getName(), p.getDetails(), p.getPrice());
+        return new ProductDto(p.getId(), p.getName(), p.getDetails(), p.getPrice(), p.getStock());
     }
 
     public static ProductWithHistoryDto toProductWithHistoryDto(Product p) {
@@ -29,6 +29,7 @@ public class ProductMapper {
                 p.getName(),
                 p.getDetails(),
                 p.getPrice(),
+                p.getStock(),
                 p.getHistory().stream().map(StockHistoryMapper::toStockHistoryDto).collect(Collectors.toList())
         );
     }

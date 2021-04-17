@@ -1,8 +1,11 @@
 package com.github.ericomonteiro.smartstock.model;
 
 import com.github.ericomonteiro.smartstock.model.enums.StockMovementType;
+import com.github.ericomonteiro.smartstock.model.mapper.ProductMapper;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +20,16 @@ import java.time.LocalDate;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class StockHistory {
+
+    public StockHistory(Product product, StockMovementType type, Long quantity) {
+        this.product = product;
+        this.type = type;
+        this.quantity = quantity;
+        this.date = LocalDate.now();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
