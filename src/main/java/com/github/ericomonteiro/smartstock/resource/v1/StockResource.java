@@ -1,7 +1,7 @@
 package com.github.ericomonteiro.smartstock.resource.v1;
 
 import com.github.ericomonteiro.smartstock.model.dto.product.ProductWithHistoryDto;
-import com.github.ericomonteiro.smartstock.service.StockService;
+import com.github.ericomonteiro.smartstock.service.stock.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

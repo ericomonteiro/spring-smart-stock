@@ -1,4 +1,4 @@
-create table product
+create table public.product
 (
     id bigserial not null
         constraint product_pkey
@@ -9,7 +9,7 @@ create table product
     stock bigint not null
 );
 
-create table stock_history
+create table public.stock_history
 (
     id bigserial not null
         constraint stock_history_pkey

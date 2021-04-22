@@ -16,4 +16,8 @@ public class ErrorKeys {
         public static final String ALREADY_PRODUCT_WITH_THIS_NAME = "product-5";
     }
 
+    public static class Stock {
+        public static final String STOCK_IS_NOT_ENOUGH = "stock-1";
+    }
+
 }
