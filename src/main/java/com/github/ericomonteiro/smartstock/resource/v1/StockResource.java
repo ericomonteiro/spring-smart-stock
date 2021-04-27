@@ -20,9 +20,9 @@ public class StockResource {
         return ResponseEntity.ok(stockService.registerEntry(productId, quantity));
     }
 
-    @PostMapping("/{productId}/exit/{quantity}")
-    public ResponseEntity<ProductWithHistoryDto> exitStock(@PathVariable Long productId, @PathVariable Long quantity) {
-        return ResponseEntity.ok(stockService.registerExit(productId, quantity));
+    @PostMapping("/{productId}/withdraw/{quantity}")
+    public ResponseEntity<ProductWithHistoryDto> withdrawStock(@PathVariable Long productId, @PathVariable Long quantity) {
+        return ResponseEntity.ok(stockService.registerWithdraw(productId, quantity));
     }
 
 

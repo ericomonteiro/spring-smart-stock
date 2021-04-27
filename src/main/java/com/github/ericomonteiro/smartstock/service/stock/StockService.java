@@ -22,7 +22,7 @@ public class StockService {
         return ProductMapper.toProductWithHistoryDto(productRepository.save(product));
     }
 
-    public ProductWithHistoryDto registerExit(Long productId, Long quantity) {
+    public ProductWithHistoryDto registerWithdraw(Long productId, Long quantity) {
         var product = productService.getAndValidProduct(productId);
 
         if (product.getStock() < quantity) {

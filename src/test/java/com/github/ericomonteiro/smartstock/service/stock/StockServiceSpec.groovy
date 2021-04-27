@@ -39,7 +39,7 @@ class StockServiceSpec extends Specification {
         1 * productRepository.save(_ as Product) >> {Product p -> p}
 
         when: "try to do exit stock"
-        def newProduct = stockService.registerExit(PRODUCT_ID, 5)
+        def newProduct = stockService.registerWithdraw(PRODUCT_ID, 5)
 
         then: "the withdraw must be registered"
         noExceptionThrown()
@@ -52,7 +52,7 @@ class StockServiceSpec extends Specification {
         1 * productService.getAndValidProduct(PRODUCT_ID) >> product
 
         when: "try to do exit stock"
-        stockService.registerExit(PRODUCT_ID, 25)
+        stockService.registerWithdraw(PRODUCT_ID, 25)
 
         then: "the entry must be registered"
         BusinessException exception = thrown()
