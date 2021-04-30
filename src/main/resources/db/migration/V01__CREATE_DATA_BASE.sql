@@ -18,7 +18,22 @@ create table public.stock_history
     quantity bigint not null,
     type varchar(255) not null,
     product_id bigint not null
-        constraint product_fk
+        constraint history_product_fk
             references product
 );
+
+create table photo
+(
+    id uuid not null
+        constraint photo_pkey
+            primary key,
+    data oid,
+    file_type varchar(255),
+    main boolean,
+    product_id bigint not null
+        constraint photo_product_fk
+            references product
+);
+
+
 

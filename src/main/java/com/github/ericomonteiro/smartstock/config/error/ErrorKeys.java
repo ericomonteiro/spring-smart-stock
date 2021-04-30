@@ -14,6 +14,10 @@ public class ErrorKeys {
         public static final String PRICE_MUST_GREATER_ZERO = "product-3";
         public static final String PRICE_NOT_NULL = "product-4";
         public static final String ALREADY_PRODUCT_WITH_THIS_NAME = "product-5";
+
+        public static class Album {
+            public static final String MAIN_PHOTO_UNDEFINED = "product-album-1";
+        }
     }
 
     public static class Stock {
