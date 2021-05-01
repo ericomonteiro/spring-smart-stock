@@ -8,4 +8,5 @@ import lombok.Data;
 public class FileResponseDto {
     private String name;
     private String type;
+    private Boolean main;
 }

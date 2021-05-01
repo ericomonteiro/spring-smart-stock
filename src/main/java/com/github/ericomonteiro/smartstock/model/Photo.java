@@ -32,6 +32,5 @@ public class Photo {
     private String fileType;
 
     @Lob
-    @Type(type = "text")
     private byte[] data;
 }

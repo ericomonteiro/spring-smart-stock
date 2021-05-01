@@ -8,6 +8,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PhotoMapper {
 
@@ -23,8 +25,13 @@ public class PhotoMapper {
     public static FileResponseDto toFileResponseDto(Photo photo) {
         return new FileResponseDto(
                 photo.getId().toString(),
-                photo.getFileType()
+                photo.getFileType(),
+                photo.getMain()
         );
+    }
+
+    public static List<FileResponseDto> toListFileResponseDto(List<Photo> photos) {
+        return photos.stream().map(PhotoMapper::toFileResponseDto).collect(Collectors.toList());
     }
 
     public static PhotoDto toPhotoDto(Photo photo) {
