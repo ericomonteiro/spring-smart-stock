@@ -15,7 +15,7 @@ class StockServiceSpec extends Specification {
 
     var stockService = new StockService(productService, productRepository)
     var stockHistory = new ArrayList<StockHistory>()
-    var product = new Product(PRODUCT_ID, "NAME", "DETAILS", 10.0, 15L, stockHistory)
+    var product = new Product(PRODUCT_ID, "NAME", "DETAILS", 10.0, 15L, stockHistory, null)
 
     def PRODUCT_ID = 1L
 
