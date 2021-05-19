@@ -47,12 +47,26 @@ public class Product {
     )
     private List<StockHistory> history;
 
+    @OneToMany(mappedBy = "product"
+            , fetch = FetchType.LAZY
+            , cascade = CascadeType.ALL
+            , orphanRemoval = true
+    )
+    private List<Photo> album;
+
     public Product(Long id, String name, String details, Float price) {
         this.id = id;
         this.name = name;
         this.details = details;
         this.price = price;
         this.stock = 0L;
+    }
+
+    public void addPhoto(Photo photo) {
+        if (photo.getMain()) {
+            this.album.forEach((p) -> p.setMain(false));
+        }
+        this.album.add(photo);
     }
 
     public void registerEntry(Long quantity) {
