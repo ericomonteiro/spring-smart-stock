@@ -3,6 +3,7 @@ package com.github.ericomonteiro.smartstock.model.dto.product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,6 +17,7 @@ import static com.github.ericomonteiro.smartstock.config.error.ErrorKeys.Product
 @Data
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProductCreateDto {
     @NotBlank(message = NAME_NOT_BLANK)
     private String name;
